@@ -16,7 +16,7 @@ CREATE TABLE Users (
   phone_number VARCHAR(20)
 );
 
---2. CREATE MATCHES TABLE
+-- CREATE MATCHES TABLE
 
 CREATE TABLE Matches (
   match_id INT PRIMARY KEY,
