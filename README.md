@@ -53,4 +53,4 @@ Adjust usernames, database names, and paths as needed. Review the SQL file befor
 
 ## Contact
 
-If you want changes or a more detailed README (examples, schema summary, sample output), tell me what you'd like and I will update it.
+
