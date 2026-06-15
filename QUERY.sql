@@ -1,3 +1,6 @@
+-- Football Ticket Booking System - Database Design & SQL Queries
+
+
 -- DROP TABLES IF THEY ALREADY EXIST
 
 DROP TABLE IF EXISTS Bookings;
