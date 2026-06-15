@@ -1,8 +1,12 @@
+-- DROP TABLES IF THEY ALREADY EXIST
+
 DROP TABLE IF EXISTS Bookings;
 
 DROP TABLE IF EXISTS Matches;
 
 DROP TABLE IF EXISTS Users;
+
+--CREATE USERS TABLE
 
 CREATE TABLE Users (
   user_id INT PRIMARY KEY,
@@ -11,6 +15,8 @@ CREATE TABLE Users (
   role VARCHAR(20) NOT NULL CHECK (role IN ('Ticket Manager', 'Football Fan')),
   phone_number VARCHAR(20)
 );
+
+--2. CREATE MATCHES TABLE
 
 CREATE TABLE Matches (
   match_id INT PRIMARY KEY,
@@ -27,6 +33,8 @@ CREATE TABLE Matches (
   )
 );
 
+--CREATE BOOKINGS TABLE
+
 CREATE TABLE Bookings (
   booking_id INT PRIMARY KEY,
   user_id INT NOT NULL REFERENCES Users (user_id),
@@ -37,6 +45,8 @@ CREATE TABLE Bookings (
   ),
   total_cost NUMERIC(10, 2) CHECK (total_cost >= 0)
 );
+
+--INSERT DATA INTO USERS
 
 INSERT INTO
   Users (user_id, full_name, email, role, phone_number)
@@ -111,6 +121,8 @@ VALUES
     'Football Fan',
     '+8801788888888'
   );
+
+  --INSERT DATA INTO MATCHES
 
 INSERT INTO
   Matches (
@@ -192,6 +204,8 @@ VALUES
     'Available'
   );
 
+--INSERT DATA INTO BOOKINGS
+
 INSERT INTO
   Bookings (
     booking_id,
@@ -215,6 +229,8 @@ VALUES
   (511, 5, 102, 'B-10', 'Refunded', 120),
   (512, 6, 110, NULL, NULL, 85);
 
+ -- Query 1: All Champions League matches that are currently Available. 
+
 SELECT
   match_id,
   fixture,
@@ -224,6 +240,8 @@ FROM
 WHERE
   tournament_category = 'Champions League'
   AND match_status = 'Available';
+
+  -- Query 2: Users whose name starts with Tanvir OR contains Haque
 
 SELECT
   user_id,
@@ -235,6 +253,9 @@ WHERE
   full_name ILIKE 'Tanvir%'
   OR full_name ILIKE '%Haque%';
 
+
+  --Query 3: Bookings with a missing (NULL) payment status, shown as Action Required.
+
 SELECT
   booking_id,
   user_id,
@@ -244,3 +265,14 @@ FROM
   Bookings
 WHERE
   payment_status IS NULL;
+
+  -- Query 4: Booking details with the buyer's full name and the match fixture.
+SELECT
+  b.booking_id,
+  u.full_name,
+  m.fixture,
+  b.total_cost
+FROM
+  Bookings b
+  INNER JOIN Users u ON b.user_id = u.user_id
+  INNER JOIN Matches m ON b.match_id = m.match_id;
